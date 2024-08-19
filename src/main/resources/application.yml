@@ -23,3 +23,6 @@ springdoc:
     path: /swagger-ui.html
   api-docs:
     path: /api-docs
+
+appDescription: "Stock microservice API REST"
+appVersion: "1.0.0"
