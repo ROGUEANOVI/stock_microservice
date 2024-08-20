@@ -1,6 +1,7 @@
 package com.rogueanovi.stock_microservice.categories.infrastructure.exceptionhandler;
 
 import com.rogueanovi.stock_microservice.categories.infrastructure.exception.CategoryAlReadyExistsException;
+import com.rogueanovi.stock_microservice.categories.infrastructure.exception.NoDataFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.*;
 
@@ -17,17 +17,17 @@ import java.util.*;
 public class ControllerAdvisor {
     private static final String MESSAGE = "Message";
 
-
     @ExceptionHandler(CategoryAlReadyExistsException.class)
-    public ResponseEntity<Map<String, String>> handleCategoryAlReadyExistsException(
-            CategoryAlReadyExistsException categoryAlReadyExistsException) {
+    public ResponseEntity<Map<String, String>> handleCategoryAlReadyExistsException() {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap(MESSAGE, ExceptionResponse.CATEGORY_ALREADY_EXISTS.getMessage()));
+    }
 
-        return ResponseEntity.status(HttpStatus.CONFLICT)
-                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.CATEGORY_ALREADY_EXISTS.getMessage()));
+    @ExceptionHandler(NoDataFoundException.class)
+    public ResponseEntity<Map<String, String>> handleNoDataFoundException() {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error -> {
@@ -40,7 +40,6 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Map<String, String>> handleConstraintViolationException(ConstraintViolationException ex) {
         Map<String, String> errors = new HashMap<>();
         for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {

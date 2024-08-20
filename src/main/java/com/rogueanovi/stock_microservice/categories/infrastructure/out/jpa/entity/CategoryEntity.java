@@ -18,13 +18,13 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50 , message = "Name must be between 1 and 50 characters")
     @NotBlank(message = "Description cannot be blank")
     @NotEmpty(message = "Description cannot be empty")
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Size(min = 1, max = 90)
+    @Size(min = 1, max = 90, message = "Description must be between 1 and 90 characters")
     @NotBlank(message = "Description cannot be blank")
     @NotEmpty(message = "Description cannot be empty")
     @Column(name = "description", nullable = false)

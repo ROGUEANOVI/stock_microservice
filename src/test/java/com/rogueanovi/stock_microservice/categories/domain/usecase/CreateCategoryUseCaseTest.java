@@ -32,7 +32,7 @@ class CreateCategoryUseCaseTest {
         createCategoryUseCase.createCategory(category);
 
         // Assert
-        verify(categoryPersistencePort, times(1)).saveCategory(any(Category.class));
+        verify(categoryPersistencePort, times(1)).createCategory(any(Category.class));
     }
 }
 
