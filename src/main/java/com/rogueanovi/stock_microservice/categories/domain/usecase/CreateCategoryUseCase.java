@@ -13,7 +13,7 @@ public class CreateCategoryUseCase implements ICreateCategoryServicePort {
 
     @Override
     public void createCategory(Category category) {
-        this.categoryPersistencePort.saveCategory(category);
+        this.categoryPersistencePort.createCategory(category);
     }
 }
 

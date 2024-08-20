@@ -42,7 +42,6 @@ class ControllerAdvisorTest {
         assertEquals("mensaje de error", response.getBody().get("campo"));
     }
 
-
     @Test
     void testHandleConstraintViolationException() {
         // Arrange
