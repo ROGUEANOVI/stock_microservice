@@ -24,5 +24,6 @@ springdoc:
   api-docs:
     path: /api-docs
 
-appDescription: "Stock microservice API REST"
-appVersion: "1.0.0"
+
+description: "Stock microservice API REST"
+version: "1.0.0"

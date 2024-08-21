@@ -14,22 +14,22 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class BeanConfiguration {
+public class CategoryBeanConfiguration {
     private final CategoryEntitymapper categoryEntitymapper;
     private final ICategoryRepository categoryRepository;
 
     @Bean
-    public ICategoryPersistencePort categoryPersistencePort() {
+    public ICategoryPersistencePort categoryPersistencePort(){
         return new CategoryJpaAdapter(categoryRepository, categoryEntitymapper);
     }
 
     @Bean
-    public ICreateCategoryServicePort createCategoryService() {
+    public ICreateCategoryServicePort createCategoryServicePort(){
         return new CreateCategoryUseCase(categoryPersistencePort());
     }
 
     @Bean
-    public IListCategoriesServicePort listCategoryService() {
+    public IListCategoriesServicePort listCategoriesServicePort(){
         return new ListCategoriesUseCase(categoryPersistencePort());
     }
 }
