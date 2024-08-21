@@ -1,4 +1,4 @@
-package com.rogueanovi.stock_microservice.categories.infrastrcture.exceptionhandler;
+package com.rogueanovi.stock_microservice.global.exceptionhandler;
 
 import com.rogueanovi.stock_microservice.categories.infrastructure.exceptionhandler.ControllerAdvisor;
 import jakarta.validation.ConstraintViolation;
@@ -14,15 +14,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ControllerAdvisorTest {
-
+class GlobalExceptionHandlerTest {
     private final ControllerAdvisor controllerAdvisor = new ControllerAdvisor();
 
     @Test
@@ -45,7 +47,7 @@ class ControllerAdvisorTest {
     @Test
     void testHandleConstraintViolationException() {
         // Arrange
-        ConstraintViolationException ex = createConstraintViolationException("mensaje de error");
+        ConstraintViolationException ex = createConstraintViolationException();
         // Act
         ResponseEntity<Map<String, String>> response = controllerAdvisor.handleConstraintViolationException(ex);
         // Assert
@@ -54,14 +56,14 @@ class ControllerAdvisorTest {
         assertEquals("mensaje de error", response.getBody().get("objeto.campo"));
     }
 
-    private ConstraintViolationException createConstraintViolationException(String message) {
+    private ConstraintViolationException createConstraintViolationException() {
         ConstraintViolationException ex = new ConstraintViolationException(new HashSet<>());
         Set<ConstraintViolation<?>> violations = new HashSet<>();
         ConstraintViolation<?> violation = mock(ConstraintViolation.class);
         Path path = mock(Path.class);
         when(path.toString()).thenReturn("objeto.campo"); // establece el propertyPath en "objeto.campo"
         when(violation.getPropertyPath()).thenReturn(path);
-        when(violation.getMessage()).thenReturn(message);
+        when(violation.getMessage()).thenReturn("mensaje de error");
         violations.add(violation);
         ex.getConstraintViolations().addAll(violations);
         return ex;

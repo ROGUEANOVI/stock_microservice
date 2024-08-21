@@ -1,4 +1,4 @@
-package com.rogueanovi.stock_microservice.categories.application.dto;
+package com.rogueanovi.stock_microservice.brands.application.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CategoryRequest {
+public class BrandRequest {
     @NotBlank
     @NotEmpty
     @Size(min = 1, max = 50)
@@ -16,6 +16,6 @@ public class CategoryRequest {
 
     @NotBlank
     @NotEmpty
-    @Size(min = 1, max = 90)
+    @Size(min = 1, max = 120)
     private String description;
 }
