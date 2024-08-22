@@ -1,10 +1,11 @@
 package com.rogueanovi.stock_microservice.brands.domain.usecase;
 
 import com.rogueanovi.stock_microservice.brands.domain.exception.BrandAlreadyExistsException;
-import com.rogueanovi.stock_microservice.brands.domain.exception.constant.ExceptionMessage;
+import com.rogueanovi.stock_microservice.brands.domain.exception.constant.BrandExceptionMessages;
 import com.rogueanovi.stock_microservice.brands.domain.model.Brand;
 import com.rogueanovi.stock_microservice.brands.domain.port.api.ICreateBrandServicePort;
 import com.rogueanovi.stock_microservice.brands.domain.port.spi.ICreateBrandPersistencePort;
+import com.rogueanovi.stock_microservice.brands.domain.validation.BrandValidator;
 
 public class CreateBrandUseCase implements ICreateBrandServicePort {
     private final ICreateBrandPersistencePort brandPersistencePort;
@@ -15,8 +16,10 @@ public class CreateBrandUseCase implements ICreateBrandServicePort {
 
     @Override
     public void createBrand(Brand brand) {
+        BrandValidator.validateName(brand.getName());
+        BrandValidator.validateDescription(brand.getDescription());
         if (brandPersistencePort.existsBrandByName(brand.getName())) {
-            throw new BrandAlreadyExistsException(ExceptionMessage.BRAND_ALREADY_EXISTS);
+            throw new BrandAlreadyExistsException(BrandExceptionMessages.BRAND_ALREADY_EXISTS);
         }
         brandPersistencePort.createBrand(brand);
     }
