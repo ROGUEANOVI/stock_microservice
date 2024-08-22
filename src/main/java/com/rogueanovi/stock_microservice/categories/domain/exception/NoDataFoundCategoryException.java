@@ -5,4 +5,3 @@ public class NoDataFoundCategoryException extends RuntimeException {
         super(message);
     }
 }
-

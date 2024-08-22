@@ -1,7 +1,7 @@
 package com.rogueanovi.stock_microservice.brands.domain.validation;
 
-import com.rogueanovi.stock_microservice.brands.domain.exception.InvalidBrandDescriptionException;
-import com.rogueanovi.stock_microservice.brands.domain.exception.InvalidBrandNameException;
+import com.rogueanovi.stock_microservice.brands.domain.exception.InvalidBrandException;
+import com.rogueanovi.stock_microservice.brands.domain.model.Brand;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -12,74 +12,74 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 class BrandValidatorTest {
     @Test
-    void shouldThrowInvalidBrandNameExceptionWhenNameIsNull() {
+    void shouldThrowInvalidBrandExceptionWhenNameIsNull() {
         // Arrange
-        String name = null;
+        Brand brand = new Brand(null, null, "Description");
 
         // Act and Assert
-        assertThrows(InvalidBrandNameException.class, () -> BrandValidator.validateName(name));
+        assertThrows(InvalidBrandException.class, () -> BrandValidator.validate(brand));
     }
 
     @Test
-    void shouldThrowInvalidBrandNameExceptionWhenNameIsBlank() {
+    void shouldThrowInvalidBrandExceptionWhenNameIsBlank() {
         // Arrange
-        String name = "";
+        Brand brand = new Brand(null, " ", "Description");
 
         // Act and Assert
-        assertThrows(InvalidBrandNameException.class, () -> BrandValidator.validateName(name));
+        assertThrows(InvalidBrandException.class, () -> BrandValidator.validate(brand));
     }
 
     @Test
-    void shouldThrowInvalidBrandNameExceptionWhenNameIsTooLong() {
+    void shouldThrowInvalidBrandExceptionWhenNameIsTooLong() {
         // Arrange
-        String name = "a".repeat(51);
+        Brand brand = new Brand(null, "a".repeat(51), "Description");
 
         // Act and Assert
-        assertThrows(InvalidBrandNameException.class, () -> BrandValidator.validateName(name));
+        assertThrows(InvalidBrandException.class, () -> BrandValidator.validate(brand));
     }
 
     @Test
     void shouldNotThrowExceptionWhenNameIsValid() {
         // Arrange
-        String name = "Koaj";
+        Brand brand = new Brand(null, "Koaj", "Description");
 
         // Act and Assert
-        assertDoesNotThrow(() -> BrandValidator.validateName(name));
+        assertDoesNotThrow(() -> BrandValidator.validate(brand));
     }
 
     @Test
     void shouldThrowInvalidBrandDescriptionExceptionWhenDescriptionIsNull() {
         // Arrange
-        String description = null;
+        Brand brand = new Brand(null, "Koaj", null);
 
         // Act and Assert
-        assertThrows(InvalidBrandDescriptionException.class, () -> BrandValidator.validateDescription(description));
+        assertThrows(InvalidBrandException.class, () -> BrandValidator.validate(brand));
     }
 
     @Test
-    void shouldThrowInvalidBrandDescriptionExceptionWhenDescriptionIsBlank() {
+    void shouldThrowInvalidBrandExceptionWhenDescriptionIsBlank() {
         // Arrange
-        String description = "";
+        Brand brand = new Brand(null, "Koaj", "");
 
         // Act and Assert
-        assertThrows(InvalidBrandDescriptionException.class, () -> BrandValidator.validateDescription(description));
+        assertThrows(InvalidBrandException.class, () -> BrandValidator.validate(brand));
     }
 
     @Test
-    void shouldThrowInvalidBrandDescriptionExceptionWhenDescriptionIsTooLong() {
+    void shouldThrowInvalidBrandExceptionWhenDescriptionIsTooLong() {
         // Arrange
-        String description = "a".repeat(121);
+        Brand brand = new Brand(null, "Koaj", "a".repeat(121));
 
         // Act and Assert
-        assertThrows(InvalidBrandDescriptionException.class, () -> BrandValidator.validateDescription(description));
+        assertThrows(InvalidBrandException.class, () -> BrandValidator.validate(brand));
     }
 
     @Test
     void shouldNotThrowExceptionWhenDescriptionIsValid() {
         // Arrange
-        String description = "Ropa, Tenis y Accesorios para Mujer y Hombre";
+        Brand brand = new Brand(null, "Koaj", "Ropa, Tenis y Accesorios para Mujer y Hombre");
 
         // Act and Assert
-        assertDoesNotThrow(() -> BrandValidator.validateDescription(description));
+        assertDoesNotThrow(() -> BrandValidator.validate(brand));
     }
 }

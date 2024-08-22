@@ -8,8 +8,8 @@ import org.mapstruct.ReportingPolicy;
 import java.util.List;
 
 @Mapper(componentModel = "spring",
-        unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        unmappedSourcePolicy = ReportingPolicy.IGNORE
+    unmappedTargetPolicy = ReportingPolicy.IGNORE,
+    unmappedSourcePolicy = ReportingPolicy.IGNORE
 )
 public interface BrandResponseMapper {
     List<BrandResponse> toBrandResponseList(List<Brand> brands);

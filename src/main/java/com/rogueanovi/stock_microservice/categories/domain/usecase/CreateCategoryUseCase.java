@@ -16,8 +16,7 @@ public class CreateCategoryUseCase implements ICreateCategoryServicePort {
 
     @Override
     public void createCategory(Category category) {
-        CategoryValidator.validateName(category.getName());
-        CategoryValidator.validateDescription(category.getDescription());
+        CategoryValidator.validate(category);
         if (categoryPersistencePort.existsCategoryByName(category.getName())) {
             throw new CategoryAlreadyExistsException(CategoryExceptionMessages.CATEGORY_ALREADY_EXISTS);
         }

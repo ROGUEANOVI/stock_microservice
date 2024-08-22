@@ -1,9 +1,7 @@
 package com.rogueanovi.stock_microservice.categories.infrastructure.exceptionhandler;
 
-import com.rogueanovi.stock_microservice.brands.domain.exception.constant.BrandExceptionMessages;
 import com.rogueanovi.stock_microservice.categories.domain.exception.CategoryAlreadyExistsException;
-import com.rogueanovi.stock_microservice.categories.domain.exception.InvalidCategoryDescriptionException;
-import com.rogueanovi.stock_microservice.categories.domain.exception.InvalidCategoryNameException;
+import com.rogueanovi.stock_microservice.categories.domain.exception.InvalidCategoryException;
 import com.rogueanovi.stock_microservice.categories.domain.exception.NoDataFoundCategoryException;
 import com.rogueanovi.stock_microservice.categories.domain.exception.constant.CategoryExceptionMessages;
 import org.springframework.http.HttpStatus;
@@ -15,16 +13,11 @@ import java.util.*;
 
 @ControllerAdvice
 public class CategoryExceptionHandler {
-
-    @ExceptionHandler(InvalidCategoryNameException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidBrandNameException(InvalidCategoryNameException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap(CategoryExceptionMessages.KEY_MESSAGE, ex.getMessage()));
-    }
-
-    @ExceptionHandler(InvalidCategoryDescriptionException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidBrandDescriptionException(InvalidCategoryDescriptionException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap(CategoryExceptionMessages.KEY_MESSAGE, ex.getMessage()));
-
+    @ExceptionHandler(InvalidCategoryException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidCategoryException(InvalidCategoryException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getErrors().forEach(error -> errors.put(error.keySet().iterator().next(), error.values().iterator().next()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
     @ExceptionHandler(CategoryAlreadyExistsException.class)
