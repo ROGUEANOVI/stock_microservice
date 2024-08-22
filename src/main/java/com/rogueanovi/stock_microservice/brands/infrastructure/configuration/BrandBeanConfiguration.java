@@ -1,9 +1,13 @@
 package com.rogueanovi.stock_microservice.brands.infrastructure.configuration;
 
 import com.rogueanovi.stock_microservice.brands.domain.port.api.ICreateBrandServicePort;
+import com.rogueanovi.stock_microservice.brands.domain.port.api.IListBrandsServicePort;
 import com.rogueanovi.stock_microservice.brands.domain.port.spi.ICreateBrandPersistencePort;
+import com.rogueanovi.stock_microservice.brands.domain.port.spi.IListBrandsPersistencePort;
 import com.rogueanovi.stock_microservice.brands.domain.usecase.CreateBrandUseCase;
+import com.rogueanovi.stock_microservice.brands.domain.usecase.ListBrandsUseCase;
 import com.rogueanovi.stock_microservice.brands.infrastructure.out.jpa.adapter.CreateBrandJpaAdapter;
+import com.rogueanovi.stock_microservice.brands.infrastructure.out.jpa.adapter.ListBrandsJpaAdapter;
 import com.rogueanovi.stock_microservice.brands.infrastructure.out.jpa.mapper.BrandEntityMapper;
 import com.rogueanovi.stock_microservice.brands.infrastructure.out.jpa.repository.IBrandRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,5 +28,15 @@ public class BrandBeanConfiguration {
     @Bean
     public ICreateBrandServicePort createBrandServicePort() {
         return new CreateBrandUseCase(createBrandPersistencePort());
+    }
+
+    @Bean
+    public IListBrandsPersistencePort listBrandsPersistencePort() {
+        return new ListBrandsJpaAdapter(brandRepository, brandEntityMapper);
+    }
+
+    @Bean
+    public IListBrandsServicePort listBrandsServicePort() {
+        return new ListBrandsUseCase(listBrandsPersistencePort());
     }
 }

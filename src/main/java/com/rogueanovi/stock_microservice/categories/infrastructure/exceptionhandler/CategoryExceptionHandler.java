@@ -18,12 +18,12 @@ public class CategoryExceptionHandler {
 
     @ExceptionHandler(InvalidCategoryNameException.class)
     public ResponseEntity<Map<String, String>> handleInvalidBrandNameException(InvalidCategoryNameException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap(BrandExceptionMessages.KEY_MESSAGE, ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap(CategoryExceptionMessages.KEY_MESSAGE, ex.getMessage()));
     }
 
     @ExceptionHandler(InvalidCategoryDescriptionException.class)
     public ResponseEntity<Map<String, String>> handleInvalidBrandDescriptionException(InvalidCategoryDescriptionException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap(BrandExceptionMessages.KEY_MESSAGE, ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap(CategoryExceptionMessages.KEY_MESSAGE, ex.getMessage()));
 
     }
 

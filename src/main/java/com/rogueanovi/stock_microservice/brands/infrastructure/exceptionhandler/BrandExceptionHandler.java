@@ -3,6 +3,7 @@ package com.rogueanovi.stock_microservice.brands.infrastructure.exceptionhandler
 import com.rogueanovi.stock_microservice.brands.domain.exception.BrandAlreadyExistsException;
 import com.rogueanovi.stock_microservice.brands.domain.exception.InvalidBrandDescriptionException;
 import com.rogueanovi.stock_microservice.brands.domain.exception.InvalidBrandNameException;
+import com.rogueanovi.stock_microservice.brands.domain.exception.NoDataFoundBrandException;
 import com.rogueanovi.stock_microservice.brands.domain.exception.constant.BrandExceptionMessages;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,5 +30,10 @@ public class BrandExceptionHandler {
     @ExceptionHandler(BrandAlreadyExistsException.class)
     public ResponseEntity<Map<String, String>> handleBrandAlreadyExistsException(BrandAlreadyExistsException ex) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap(BrandExceptionMessages.KEY_MESSAGE, ex.getMessage()));
+    }
+
+    @ExceptionHandler(NoDataFoundBrandException.class)
+    public ResponseEntity<Map<String, String>> handleNoDataFoundException(NoDataFoundBrandException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.singletonMap(BrandExceptionMessages.KEY_MESSAGE, ex.getMessage()));
     }
 }
