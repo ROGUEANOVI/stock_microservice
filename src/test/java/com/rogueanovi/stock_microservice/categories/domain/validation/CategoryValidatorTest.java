@@ -1,7 +1,7 @@
 package com.rogueanovi.stock_microservice.categories.domain.validation;
 
-import com.rogueanovi.stock_microservice.categories.domain.exception.InvalidCategoryDescriptionException;
-import com.rogueanovi.stock_microservice.categories.domain.exception.InvalidCategoryNameException;
+import com.rogueanovi.stock_microservice.categories.domain.exception.InvalidCategoryException;
+import com.rogueanovi.stock_microservice.categories.domain.model.Category;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -12,74 +12,74 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(MockitoExtension.class)
 class CategoryValidatorTest {
     @Test
-    void shouldThrowInvalidCategoryNameExceptionWhenNameIsNull() {
+    void shouldThrowInvalidCategoryExceptionWhenNameIsNull() {
         // Arrange
-        String name = null;
+        Category category = new Category(null, null, "Productora de elementos de belleza");
 
         // Act and Assert
-        assertThrows(InvalidCategoryNameException.class, () -> CategoryValidator.validateName(name));
+        assertThrows(InvalidCategoryException.class, () -> CategoryValidator.validate(category));
     }
 
     @Test
-    void shouldThrowInvalidCategoryNameExceptionWhenNameIsBlank() {
+    void shouldThrowInvalidCategoryExceptionWhenNameIsBlank() {
         // Arrange
-        String name = "";
+        Category category = new Category(null, " ", "Productora de elementos de belleza");
 
         // Act and Assert
-        assertThrows(InvalidCategoryNameException.class, () -> CategoryValidator.validateName(name));
+        assertThrows(InvalidCategoryException.class, () -> CategoryValidator.validate(category));
     }
 
     @Test
-    void shouldThrowInvalidCategoryNameExceptionWhenNameIsTooLong() {
+    void shouldThrowInvalidCategoryExceptionWhenNameIsTooLong() {
         // Arrange
-        String name = "a".repeat(51);
+        Category category = new Category(null, "a".repeat(51), "Productora de elementos de belleza ");
 
         // Act and Assert
-        assertThrows(InvalidCategoryNameException.class, () -> CategoryValidator.validateName(name));
+        assertThrows(InvalidCategoryException.class, () -> CategoryValidator.validate(category));
     }
 
     @Test
     void shouldNotThrowExceptionWhenNameIsValid() {
         // Arrange
-        String name = "Koaj";
+        Category category = new Category(null, "Belleza", "Description");
 
         // Act and Assert
-        assertDoesNotThrow(() -> CategoryValidator.validateName(name));
+        assertDoesNotThrow(() -> CategoryValidator.validate(category));
     }
 
     @Test
-    void shouldThrowInvalidCategoryDescriptionExceptionWhenDescriptionIsNull() {
+    void shouldThrowInvalidCategoryExceptionWhenDescriptionIsNull() {
         // Arrange
-        String description = null;
+        Category category = new Category(null, "Belleza", null);
 
         // Act and Assert
-        assertThrows(InvalidCategoryDescriptionException.class, () -> CategoryValidator.validateDescription(description));
+        assertThrows(InvalidCategoryException.class, () -> CategoryValidator.validate(category));
     }
 
     @Test
-    void shouldThrowInvalidCategoryDescriptionExceptionWhenDescriptionIsBlank() {
+    void shouldThrowInvalidCategoryExceptionWhenDescriptionIsBlank() {
         // Arrange
-        String description = "";
+        Category category = new Category(null, "Belleza", "");
 
         // Act and Assert
-        assertThrows(InvalidCategoryDescriptionException.class, () -> CategoryValidator.validateDescription(description));
+        assertThrows(InvalidCategoryException.class, () -> CategoryValidator.validate(category));
     }
 
     @Test
-    void shouldThrowInvalidCategoryDescriptionExceptionWhenDescriptionIsTooLong() {
+    void shouldThrowInvalidCategoryExceptionWhenDescriptionIsTooLong() {
         // Arrange
-        String description = "a".repeat(91);
+        Category category = new Category(null, "Belleza", "a".repeat(91));
 
         // Act and Assert
-        assertThrows(InvalidCategoryDescriptionException.class, () -> CategoryValidator.validateDescription(description));
+        assertThrows(InvalidCategoryException.class, () -> CategoryValidator.validate(category));
     }
 
     @Test
     void shouldNotThrowExceptionWhenDescriptionIsValid() {
         // Arrange
-        String description = "Productora de elementos de belleza";
+        Category category = new Category(null, "Belleza", "Productora de elementos de belleza");
 
         // Act and Assert
-        assertDoesNotThrow(() -> CategoryValidator.validateDescription(description));
+        assertDoesNotThrow(() -> CategoryValidator.validate(category));
     }
 }

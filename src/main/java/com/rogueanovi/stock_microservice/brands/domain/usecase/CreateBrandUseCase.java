@@ -16,8 +16,7 @@ public class CreateBrandUseCase implements ICreateBrandServicePort {
 
     @Override
     public void createBrand(Brand brand) {
-        BrandValidator.validateName(brand.getName());
-        BrandValidator.validateDescription(brand.getDescription());
+        BrandValidator.validate(brand);
         if (brandPersistencePort.existsBrandByName(brand.getName())) {
             throw new BrandAlreadyExistsException(BrandExceptionMessages.BRAND_ALREADY_EXISTS);
         }

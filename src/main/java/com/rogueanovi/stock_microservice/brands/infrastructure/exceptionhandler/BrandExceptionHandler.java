@@ -1,9 +1,6 @@
 package com.rogueanovi.stock_microservice.brands.infrastructure.exceptionhandler;
 
-import com.rogueanovi.stock_microservice.brands.domain.exception.BrandAlreadyExistsException;
-import com.rogueanovi.stock_microservice.brands.domain.exception.InvalidBrandDescriptionException;
-import com.rogueanovi.stock_microservice.brands.domain.exception.InvalidBrandNameException;
-import com.rogueanovi.stock_microservice.brands.domain.exception.NoDataFoundBrandException;
+import com.rogueanovi.stock_microservice.brands.domain.exception.*;
 import com.rogueanovi.stock_microservice.brands.domain.exception.constant.BrandExceptionMessages;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,20 +8,16 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
 public class BrandExceptionHandler {
-
-    @ExceptionHandler(InvalidBrandNameException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidBrandNameException(InvalidBrandNameException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap(BrandExceptionMessages.KEY_MESSAGE, ex.getMessage()));
-    }
-
-    @ExceptionHandler(InvalidBrandDescriptionException.class)
-    public ResponseEntity<Map<String, String>> handleInvalidBrandDescriptionException(InvalidBrandDescriptionException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap(BrandExceptionMessages.KEY_MESSAGE, ex.getMessage()));
-
+    @ExceptionHandler(InvalidBrandException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidBrandException(InvalidBrandException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getErrors().forEach(error -> errors.put(error.keySet().iterator().next(), error.values().iterator().next()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
     @ExceptionHandler(BrandAlreadyExistsException.class)

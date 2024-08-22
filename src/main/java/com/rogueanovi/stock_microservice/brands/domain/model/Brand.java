@@ -1,7 +1,5 @@
 package com.rogueanovi.stock_microservice.brands.domain.model;
 
-import com.rogueanovi.stock_microservice.brands.domain.validation.BrandValidator;
-
 public class Brand {
     private Long id;
     private String name;
@@ -26,7 +24,6 @@ public class Brand {
     }
 
     public void setName(String name) {
-        BrandValidator.validateName(name);
         this.name = name;
     }
 
@@ -35,7 +32,6 @@ public class Brand {
     }
 
     public void setDescription(String description) {
-        BrandValidator.validateDescription(description);
         this.description = description;
     }
 }
