@@ -6,4 +6,5 @@ public class BrandExceptionMessages {
     public static final String INVALID_BRAND_NAME = "Brand name cannot be null, empty, or longer than 50 characters";
     public static final String INVALID_BRAND_DESCRIPTION = "Brand description cannot be null, empty, or longer than 120 characters";
     public static final String BRAND_ALREADY_EXISTS = "Brand already exists";
+    public static final String NO_DATA_FOUND_BRAND = "No data found brand for the requested petition";
 }

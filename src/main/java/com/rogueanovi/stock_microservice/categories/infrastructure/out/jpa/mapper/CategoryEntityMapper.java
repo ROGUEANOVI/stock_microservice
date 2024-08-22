@@ -12,5 +12,5 @@ import java.util.List;
         unmappedSourcePolicy = ReportingPolicy.IGNORE)
 public interface CategoryEntityMapper {
     CategoryEntity toEntity(Category category);
-    List<Category> toCategoryList(List<CategoryEntity> categories);
+    List<Category> toCategoryList(List<CategoryEntity> categoryEntities);
 }
