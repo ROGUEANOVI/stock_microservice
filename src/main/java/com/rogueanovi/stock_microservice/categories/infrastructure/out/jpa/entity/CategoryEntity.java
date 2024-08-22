@@ -7,12 +7,14 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "category")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,12 +31,4 @@ public class CategoryEntity {
     @NotEmpty(message = "Description cannot be empty")
     @Column(name = "description", nullable = false)
     private String description;
-
-    public void setName(String name) {
-        this.name = name != null ? name.trim() : null;
-    }
-
-    public void setDescription(String description) {
-        this.description = description != null ? description.trim() : null;
-    }
 }

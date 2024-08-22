@@ -1,6 +1,5 @@
 package com.rogueanovi.stock_microservice.global.exceptionhandler;
 
-import com.rogueanovi.stock_microservice.categories.infrastructure.exceptionhandler.ControllerAdvisor;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Path;
@@ -25,7 +24,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class GlobalExceptionHandlerTest {
-    private final ControllerAdvisor controllerAdvisor = new ControllerAdvisor();
+    private final GlobalExceptionHandler globalExceptionHandler  = new GlobalExceptionHandler();
 
     @Test
     void testHandleValidationExceptions() {
@@ -36,7 +35,7 @@ class GlobalExceptionHandlerTest {
         MethodArgumentNotValidException ex = new MethodArgumentNotValidException(null, bindingResult);
 
         // Act
-        ResponseEntity<Map<String, String>> response = controllerAdvisor.handleValidationExceptions(ex);
+        ResponseEntity<Map<String, String>> response = globalExceptionHandler.handleValidationExceptions(ex);
 
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -49,7 +48,7 @@ class GlobalExceptionHandlerTest {
         // Arrange
         ConstraintViolationException ex = createConstraintViolationException();
         // Act
-        ResponseEntity<Map<String, String>> response = controllerAdvisor.handleConstraintViolationException(ex);
+        ResponseEntity<Map<String, String>> response = globalExceptionHandler.handleConstraintViolationException(ex);
         // Assert
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals(1, Objects.requireNonNull(response.getBody()).size());

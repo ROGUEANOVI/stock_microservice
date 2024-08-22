@@ -1,7 +1,7 @@
 package com.rogueanovi.stock_microservice.categories.domain.usecase;
 
 import com.rogueanovi.stock_microservice.categories.domain.model.Category;
-import com.rogueanovi.stock_microservice.categories.domain.port.spi.ICategoryPersistencePort;
+import com.rogueanovi.stock_microservice.categories.domain.port.spi.IListCategoriesPersistencePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 
 class ListCategoriesUseCaseTest {
     @Mock
-    private ICategoryPersistencePort categoryPersistencePort;
+    private IListCategoriesPersistencePort categoryPersistencePort;
 
     @InjectMocks
     private ListCategoriesUseCase listCategoriesUseCase;

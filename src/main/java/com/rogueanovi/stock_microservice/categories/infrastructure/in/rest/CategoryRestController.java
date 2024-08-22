@@ -2,7 +2,8 @@ package com.rogueanovi.stock_microservice.categories.infrastructure.in.rest;
 
 import com.rogueanovi.stock_microservice.categories.application.dto.CategoryRequest;
 import com.rogueanovi.stock_microservice.categories.application.dto.CategoryResponse;
-import com.rogueanovi.stock_microservice.categories.application.handler.ICategoryHandler;
+import com.rogueanovi.stock_microservice.categories.application.handler.ICreateCategoryHandler;
+import com.rogueanovi.stock_microservice.categories.application.handler.IListCategoriesHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,7 +25,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 public class CategoryRestController {
-    private final ICategoryHandler categoryHandler;
+    private final ICreateCategoryHandler createCategoryHandler;
+    private final IListCategoriesHandler listCategoriesHandler;
 
     @Operation(summary = "Create new category")
     @ApiResponses(value = {
@@ -34,7 +36,7 @@ public class CategoryRestController {
     })
     @PostMapping("")
     public ResponseEntity<Void> createCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
-        categoryHandler.createCategory(categoryRequest);
+        createCategoryHandler.createCategory(categoryRequest);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -50,7 +52,7 @@ public class CategoryRestController {
             @RequestParam(defaultValue = "10") @Positive @Min(value = 1, message = "Page size must be 1 or greater") Integer size,
             @RequestParam(defaultValue = "asc") @Pattern(regexp = "(?i)^(asc|desc)$", message = "Sort direction must be asc or desc") String sortDirection) {
 
-        List<CategoryResponse> categoryResponseList = categoryHandler.listCategories(page, size, sortDirection);
+        List<CategoryResponse> categoryResponseList = listCategoriesHandler.listCategories(page, size, sortDirection);
 
         return ResponseEntity.status(HttpStatus.OK).body(categoryResponseList);
     }
